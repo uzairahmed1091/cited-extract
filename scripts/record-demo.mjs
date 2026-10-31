@@ -104,7 +104,7 @@ if (process.env.REAL_RUN) {
       body: JSON.stringify({
         runId: "replay",
         cached: false,
-        model: replay.model ?? "gpt-4o-mini",
+        model: replay.model ?? "gpt-6-luna",
         cells: replay.cells,
         stats: {},
         durationMs: replay.durationMs ?? 2140,

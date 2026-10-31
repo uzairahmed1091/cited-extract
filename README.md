@@ -4,7 +4,7 @@ Define a schema, paste a document or drop in a PDF, get back typed and validated
 **every value carries a citation to the exact span it came from**, and **fields the
 document doesn't contain come back `null`** rather than a plausible guess.
 
-**[Live demo](https://structured-data-extractor.vercel.app/)** · runs on `gpt-4o-mini`,
+**[Live demo](https://structured-data-extractor.vercel.app/)** · runs on `gpt-6-luna`,
 no sign-up. The preloaded sample documents are served from cache and cost nothing; running
 your own document needs your own OpenAI key, pasted into the field in the UI and used for
 that one request.
@@ -87,7 +87,7 @@ before rendering would drift every span.
 This is a public demo on someone's personal OpenAI key, so cost is a design constraint
 rather than an afterthought.
 
-- `gpt-4o-mini` pinned on the demo path; model choice only unlocks with your own key.
+- `gpt-6-luna` at reasoning effort `none` pinned on the demo path; model choice only unlocks with your own key.
 - Documents capped at 60k chars, schemas at 25 fields, output at `256 + 150/field` tokens.
 - Runs are content-addressed by `sha256(PROMPT_VERSION, model, text, canonical schema)`.
   Preloaded samples warm their own cache on first visit; bumping `PROMPT_VERSION`
@@ -161,6 +161,11 @@ Honest list, rather than a roadmap that ages badly:
 - **File export.** The Result tab shows the JSON and copies it to the clipboard; there is
   no JSON or CSV download. `buildOutputSchema` exists and is unused.
 - **Entailment checking.** See *What this does not prove* above.
+
+## Author
+
+Built by Uzair Ahmed, full-stack engineer. More of my work, and how to reach me:
+**[dev-uzairahmed.vercel.app](https://dev-uzairahmed.vercel.app/)**
 
 ## License
 

@@ -10,9 +10,20 @@ import { createLocator, type Span } from "./locate";
 /** Bump when the prompt changes — it's part of the cache key, so old runs invalidate. */
 export const PROMPT_VERSION = "1";
 
-export const DEMO_MODEL = "gpt-4o-mini";
-export const BYO_MODELS = ["gpt-4o-mini", "gpt-4o"] as const;
+// gpt-4o-mini and gpt-4o retire 2027-01-14; OpenAI names gpt-6-luna as the replacement.
+export const DEMO_MODEL = "gpt-6-luna";
+export const BYO_MODELS = ["gpt-6-luna", "gpt-6.1-sol"] as const;
 export type Model = (typeof BYO_MODELS)[number];
+
+/**
+ * GPT-6 models are reasoning models. Luna at effort "none" is the closest match to the old
+ * non-reasoning 4o-mini, and "none" is also the only effort at which temperature is
+ * accepted. 6.1 Sol has no "none", so it gets "low" and must not be sent temperature.
+ */
+function samplingParams(model: string) {
+  if (model.startsWith("gpt-6.1-sol")) return { reasoning_effort: "low" as const };
+  return { reasoning_effort: "none" as const, temperature: 0 };
+}
 
 export const MAX_TEXT_CHARS = 60_000;
 
@@ -77,7 +88,11 @@ function buildUserPrompt(specs: FieldSpec[], text: string): string {
   return `Extract these fields:\n\n${fieldList}\n\n<document>\n${text}\n</document>`;
 }
 
-/** Bounds cost. Quotes dominate output length; ~150 tokens per field is comfortable. */
+/**
+ * Bounds cost. Quotes dominate output length; ~150 tokens per field is comfortable.
+ * Reasoning tokens count against this cap too — irrelevant at effort "none", but at "low"
+ * a "truncated" error means the cap needs headroom for reasoning, not that output overflowed.
+ */
 function maxCompletionTokens(fieldCount: number): number {
   return Math.min(4096, 256 + fieldCount * 150);
 }
@@ -98,7 +113,7 @@ export async function runExtraction(params: {
     completion = await client.chat.completions.create(
       {
         model,
-        temperature: 0,
+        ...samplingParams(model),
         max_completion_tokens: maxCompletionTokens(fields.length),
         response_format: buildResponseFormat(fields),
         messages: [

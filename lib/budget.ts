@@ -24,8 +24,14 @@ export type BudgetState = {
   degraded: boolean;
 };
 
-/** USD per 1M tokens, verified against OpenAI's model pages 2026-09-17. */
+/**
+ * USD per 1M tokens, verified against OpenAI's model pages 2026-09-17; gpt-6 rows
+ * 2026-10-16. Short-context (≤272K input) standard rates — documents are capped far below
+ * that. Reasoning tokens are billed as output and included in completion_tokens.
+ */
 const PRICING: Record<string, { input: number; output: number }> = {
+  "gpt-6-luna": { input: 0.1, output: 0.5 },
+  "gpt-6.1-sol": { input: 2, output: 10 },
   "gpt-4o-mini": { input: 0.15, output: 0.6 },
   "gpt-4o": { input: 2.5, output: 10 },
   "gpt-5.6-luna": { input: 0.2, output: 1.2 },

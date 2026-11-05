@@ -14,7 +14,7 @@ const description =
 export const metadata: Metadata = {
   // Makes the link-preview image URL absolute. The image itself is app/opengraph-image.png,
   // picked up by file convention, as are favicon.ico and apple-icon.png.
-  metadataBase: new URL("https://structured-data-extractor.vercel.app"),
+  metadataBase: new URL("https://cited-extract.vercel.app"),
   title,
   description,
   openGraph: { title, description, type: "website", url: "/", siteName: "Cited Extract" },

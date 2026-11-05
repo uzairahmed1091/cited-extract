@@ -4,7 +4,7 @@ Define a schema, paste a document or drop in a PDF, get back typed and validated
 **every value carries a citation to the exact span it came from**, and **fields the
 document doesn't contain come back `null`** rather than a plausible guess.
 
-**[Live demo](https://structured-data-extractor.vercel.app/)** · runs on `gpt-6-luna`,
+**[Live demo](https://cited-extract.vercel.app/)** · runs on `gpt-6-luna`,
 no sign-up. The preloaded sample documents are served from cache and cost nothing; running
 your own document needs your own OpenAI key, pasted into the field in the UI and used for
 that one request.

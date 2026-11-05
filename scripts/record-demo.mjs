@@ -37,7 +37,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import ffmpegPath from "ffmpeg-static";
 
-const URL = process.env.DEMO_URL ?? "https://structured-data-extractor.vercel.app/";
+const URL = process.env.DEMO_URL ?? "https://cited-extract.vercel.app/";
 const WIDTH = Number(process.env.GIF_WIDTH ?? 800);
 const FPS = Number(process.env.GIF_FPS ?? 10);
 const COLORS = Number(process.env.GIF_COLORS ?? 48);
